@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Story — A Birthday Surprise</title>
+  <meta name="description" content="An interactive birthday journey: a playful quiz, the chapters of our love story, and a surprise waiting at the end." />
+  <meta property="og:title" content="Our Story — A Birthday Surprise" />
+  <meta property="og:description" content="An interactive birthday journey: a playful quiz, the chapters of our love story, and a surprise waiting at the end." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Parisienne&family=Karla:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambience" id="ambience" aria-hidden="true"></div>
+  <div class="confetti hidden" id="confetti" aria-hidden="true"></div>
+
+  <main id="app">
+    <!-- SECTION 1: Intro -->
+    <section class="section intro" id="intro">
+      <p class="kicker font-script">for the love of my life</p>
+      <h1 class="text-gradient">
+        <span class="husband-name"></span>
+        <span class="font-script">&amp;</span>
+        <span class="wife-name"></span>
+      </h1>
+      <div class="divider"></div>
+      <p id="intro-line"></p>
+      <p class="subline" id="intro-subline"></p>
+      <div style="margin-top: 2.5rem;">
+        <button class="btn" id="start-btn">Start our journey</button>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Quiz -->
+    <section class="section hidden" id="quiz">
+      <div class="card quiz-card" id="quiz-card">
+        <div class="quiz-header">
+          <span id="quiz-progress-text">Question 1 / 6</span>
+          <span style="color: var(--rose);">♥</span>
+        </div>
+        <div class="progress"><div class="progress-bar" id="progress-bar" style="width: 0%"></div></div>
+        <h2 class="question" id="question"></h2>
+        <div class="options" id="options"></div>
+        <div class="feedback hidden" id="feedback">
+          <p class="note font-script" id="feedback-title"></p>
+          <p id="feedback-text"></p>
+          <button class="btn" id="next-btn" style="margin-top: 1rem;">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Story -->
+    <section class="section story hidden" id="story">
+      <header class="story-header rise-in">
+        <p class="font-script" style="font-size: 1.75rem; color: var(--rose);">our story</p>
+        <h2 class="text-gradient">Chapter by chapter</h2>
+        <p style="color: var(--muted-foreground); margin-top: 0.75rem;">Everything that brought us here — the beautiful parts, and the heavy ones too.</p>
+      </header>
+      <div class="timeline" id="timeline"></div>
+      <!-- <div style="margin-top: 3rem; text-align: center;">
+        <button class="btn" id="reveal-btn">One last thing...</button>
+      </div> -->
+    </section>
+
+    <!-- SECTION 4: Finale -->
+    <section class="section finale hidden" id="finale">
+      <p class="font-script" style="font-size: 2rem; color: var(--rose);">Happy Birthday,</p>
+      <h2 class="text-gradient wife-name"></h2>
+      <div class="divider"></div>
+      <p class="card message" id="finale-message"></p>
+      <p class="signature font-script" id="finale-signature"></p>
+    </section>
+  </main>
+
+  <button class="music-toggle" id="music-toggle" aria-label="Mute music">♪</button>
+  <audio id="bg-music" loop preload="none"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>

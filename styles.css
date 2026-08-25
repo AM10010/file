@@ -1,0 +1,341 @@
+/* ============================================================
+   ROMANTIC BIRTHDAY THEME — pink / burgundy / gold
+   Plain CSS version (no Tailwind, no build step needed)
+   ============================================================ */
+
+:root {
+  --radius: 1rem;
+  --background: oklch(0.982 0.012 20);
+  --foreground: oklch(0.28 0.09 15);
+  --card: oklch(0.995 0.008 30);
+  --card-foreground: oklch(0.28 0.09 15);
+  --muted: oklch(0.95 0.025 30);
+  --muted-foreground: oklch(0.5 0.06 15);
+  --border: oklch(0.9 0.04 15);
+  --ring: oklch(0.62 0.15 8);
+
+  /* brand extras */
+  --rose: oklch(0.75 0.15 8);
+  --blush: oklch(0.93 0.06 8);
+  --wine: oklch(0.33 0.13 15);
+  --gold: oklch(0.82 0.13 85);
+
+  --gradient-romance: linear-gradient(135deg, var(--wine), var(--rose) 55%, var(--gold));
+  --gradient-soft: linear-gradient(180deg, oklch(0.99 0.012 40), oklch(0.95 0.04 8));
+  --shadow-soft: 0 18px 50px -22px color-mix(in oklab, var(--wine) 55%, transparent);
+  --shadow-glow: 0 0 40px -8px color-mix(in oklab, var(--gold) 60%, transparent);
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-script: "Parisienne", cursive;
+  --font-body: "Karla", system-ui, sans-serif;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+button { font: inherit; }
+
+body {
+  background: var(--gradient-soft);
+  background-attachment: fixed;
+  color: var(--foreground);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1, h2, h3 { font-family: var(--font-display); margin: 0; }
+
+.hidden { display: none !important; }
+
+.font-script { font-family: var(--font-script); }
+
+.text-gradient {
+  background: var(--gradient-romance);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Layout shell ---------- */
+#app {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+}
+
+.section {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* ---------- Ambience (floating hearts / twinkles) ---------- */
+.ambience {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ambience .heart {
+  position: absolute;
+  bottom: -5vh;
+  color: var(--rose);
+  opacity: 0.6;
+}
+.ambience .twinkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+/* ---------- Intro ---------- */
+.kicker {
+  font-size: 1.5rem;
+  color: var(--rose);
+  margin-bottom: 0.5rem;
+}
+.intro h1 {
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+.divider {
+  width: 64px;
+  height: 2px;
+  background: var(--gradient-romance);
+  margin: 1.5rem auto;
+  border-radius: 999px;
+}
+#intro-line {
+  font-size: 1.15rem;
+  max-width: 40ch;
+}
+.subline {
+  color: var(--muted-foreground);
+  max-width: 52ch;
+  margin-top: 0.5rem;
+  white-space: pre-line;
+  line-height: 1.7;
+  text-align: left;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  border: none;
+  cursor: pointer;
+  padding: 0.9rem 2.1rem;
+  border-radius: 999px;
+  background: var(--gradient-romance);
+  color: oklch(0.98 0.015 60);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); }
+.btn:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; }
+.btn:active { transform: translateY(0); }
+
+/* ---------- Card ---------- */
+.card {
+  background: color-mix(in oklab, var(--card) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border: 1px solid color-mix(in oklab, var(--gold) 35%, transparent);
+  box-shadow: var(--shadow-soft);
+  border-radius: 1.25rem;
+  padding: 2rem;
+}
+
+/* ---------- Quiz ---------- */
+.quiz-card { width: 100%; max-width: 560px; text-align: left; }
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  margin-bottom: 0.75rem;
+}
+.progress {
+  height: 6px;
+  background: var(--muted);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.progress-bar {
+  height: 100%;
+  background: var(--gradient-romance);
+  transition: width 0.4s ease;
+}
+.question {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.option-btn {
+  text-align: left;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 0.85rem;
+  padding: 0.85rem 1.1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+.option-btn:hover { border-color: var(--rose); transform: translateX(4px); }
+.option-btn.correct { border-color: var(--gold); background: color-mix(in oklab, var(--gold) 18%, var(--card)); }
+.option-btn.incorrect { border-color: var(--wine); background: color-mix(in oklab, var(--wine) 12%, var(--card)); }
+.option-btn:disabled { cursor: default; }
+
+.feedback { margin-top: 1.5rem; }
+.feedback .note { font-size: 1.5rem; margin-bottom: 0.25rem; }
+
+/* ---------- Story / Timeline ---------- */
+.story { min-height: auto; padding: 3rem 0; }
+.story-header { margin-bottom: 2.5rem; }
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+.timeline-item {
+  text-align: left;
+  padding: 1.5rem 1.75rem;
+  opacity: 0;
+}
+.timeline-item.in-view { opacity: 1; }
+.timeline-item .chapter-label {
+  font-family: var(--font-script);
+  font-size: 1.3rem;
+  color: var(--rose);
+}
+.timeline-item h3 { font-size: 1.4rem; margin: 0.15rem 0 0.5rem; }
+.timeline-item p { margin: 0; color: var(--muted-foreground); line-height: 1.6; }
+
+.chapter-gallery {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+.chapter-gallery-img {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.3s ease;
+}
+.chapter-gallery-img:hover { transform: scale(1.06); }
+
+@media (max-width: 600px) {
+  .chapter-gallery-img { width: 88px; height: 88px; }
+}
+
+/* ---------- Finale ---------- */
+.finale h2 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1.5rem; }
+.finale .message {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  max-width: 55ch;
+  text-align: left;
+  white-space: pre-line;
+}
+.signature {
+  margin-top: 2rem;
+  font-size: 1.75rem;
+  color: var(--wine);
+}
+
+/* ---------- Confetti ---------- */
+.confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  top: -5vh;
+  width: 8px;
+  height: 14px;
+  opacity: 0.9;
+}
+
+/* ---------- Music toggle ---------- */
+.music-toggle {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--wine);
+  font-size: 1.25rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+}
+.music-toggle.playing { animation: soft-pulse 3s ease-in-out infinite; }
+
+/* ---------- Animations ---------- */
+@keyframes float-up {
+  0% { transform: translateY(10vh) scale(0.7); opacity: 0; }
+  10% { opacity: 0.8; }
+  100% { transform: translateY(-110vh) scale(1.1); opacity: 0; }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 0.9; transform: scale(1.2); }
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(-15vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes soft-pulse {
+  0%, 100% { box-shadow: var(--shadow-soft); }
+  50% { box-shadow: var(--shadow-glow); }
+}
+
+.animate-float-up { animation: float-up linear infinite; }
+.animate-twinkle { animation: twinkle ease-in-out infinite; }
+.animate-confetti { animation: confetti-fall linear forwards; }
+.rise-in, .animate-rise-in { animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-soft-pulse { animation: soft-pulse 3s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #app { padding: 2.5rem 1.25rem 4rem; }
+  .card { padding: 1.5rem; }
+}
