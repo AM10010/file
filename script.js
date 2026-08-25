@@ -141,11 +141,11 @@ Ready, Koky? ❤️ Answer a few questions about us, then walk through our chapt
   // One soundtrack per section. Put your audio files in a "music" folder
   // next to index.html, named exactly like this (or change the paths).
 music: {
-  intro: "music/intro.mp3",
-  chapter1: "music/chapter1.mp3",
-  chapter2: "music/chapter2.mp3",
-  chapter3: "music/chapter3.mp3",
-  chapter4: "music/chapter4.mp3",
+  intro:    { src: "music/intro.mp3",    start: 0 },
+  chapter1: { src: "music/chapter1.mp3", start: 37 }, // غيّر الرقم ده لثانية الجزء اللي عايزه
+  chapter2: { src: "music/chapter2.mp3", start: 0 },
+  chapter3: { src: "music/chapter3.mp3", start: 0 },
+  chapter4: { src: "music/chapter4.mp3", start: 0 },
 },
 
   finaleMessage:
@@ -446,15 +446,25 @@ let musicMuted = false;
 
 function playSectionMusic(sectionId) {
   const audio = document.getElementById("bg-music");
-  const src = CONFIG.music && CONFIG.music[sectionId];
-  if (!src) return;
+  const track = CONFIG.music && CONFIG.music[sectionId];
+  if (!track) return;
+
+  const src = track.src;
+  const startAt = track.start || 0;
 
   // Avoid restarting the same track if we're already on it.
   const alreadyOnThisTrack = audio.dataset.section === sectionId;
   if (!alreadyOnThisTrack) {
     audio.dataset.section = sectionId;
     audio.src = src;
-    audio.currentTime = 0;
+
+    // Wait for metadata to load before seeking, otherwise
+    // currentTime can silently get ignored on some browsers.
+    const seekAndPlay = () => {
+      audio.currentTime = startAt;
+      audio.removeEventListener("loadedmetadata", seekAndPlay);
+    };
+    audio.addEventListener("loadedmetadata", seekAndPlay);
   }
 
   if (musicMuted) return;
